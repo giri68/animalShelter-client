@@ -1,42 +1,35 @@
 import React from 'react';
-export default function Pet(props){
+import * as actions from '../actions.js'
+import { connect } from 'react-redux'
 
-  function onAdoptAnimal(){
-    console.log("animal adopted");
+export class Pet extends React.Component{
+
+  onAdoptAnimal(species){
+    this.props.dispatch(actions.adoptPet(species))
   }
+
+  render(){
+
   return (<div>
   <section>
   <header>
-    <h1>{props.pet.name}</h1>
-    <img src={`${props.pet.imageURL}`}/>
+    <h1>{this.props.pet.name}</h1>
+    <img src={`${this.props.pet.imageURL}`}/>
    
     </header>
     <main>
       <dl>
-       <dt> {props.pet.description}</dt>
-       <dt>{props.pet.age}</dt>
-       <dt> {props.pet.gender}</dt>
-       <dt> {props.pet.breed}</dt>
-       <dt> {props.pet.story}</dt>
+       <dt> {this.props.pet.description}</dt>
+       <dt>{this.props.pet.age}</dt>
+       <dt> {this.props.pet.gender}</dt>
+       <dt> {this.props.pet.breed}</dt>
+       <dt> {this.props.pet.story}</dt>
       </dl>
-      <button onClick = {() => onAdoptAnimal()}>adopt</button>
+      <button onClick={() => this.onAdoptAnimal(this.props.species)}>adopt</button>
     </main>
 </section>
-{/* <section>
-        <header>
-          {props.dog.name}
-          {props.dog.imageURL}
-        </header>
-        <main>
-            <dl>
-            <dt>{props.dog.description}</dt>
-            <dt> {props.dog.age}</dt>
-            <dt>{props.dog.gender}</dt>
-            <dt>{props.dog.breed}</dt>
-            <dt>{props.dog.story}</dt>
-            </dl>
-            <button>adopt</button>
-          </main>
-      </section> */}
       </div>)
 }
+}
+
+export default connect()(Pet);

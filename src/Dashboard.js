@@ -1,30 +1,32 @@
 import React from 'react';
 import Pet from './components/pet';
+import * as actions from './actions.js';
+import { connect } from 'react-redux';
 
-export default function DashBoard(props){
-  const catToAdopt = {
-    imageURL:'https://assets3.thrillist.com/v1/image/2622128/size/tmg-slideshow_l.jpg',
-    imageDescription: 'Orange bengal cat with black stripes lounging on concrete.',
-    name: 'Fluffy',
-    gender: 'Female',
-    age: 2,
-    breed: 'Bengal',
-    story: 'Thrown on the street'
+export class DashBoard extends React.Component {
+
+  componentDidMount() {
+    this.props.dispatch(actions.fetchCat())
+    this.props.dispatch(actions.fetchDog())
   }
-  
-  const dogToAdopt = {
-    imageURL: 'http://www.dogster.com/wp-content/uploads/2015/05/Cute%20dog%20listening%20to%20music%201_1.jpg',
-    imageDescription: 'A smiling golden-brown golden retreiver listening to music.',
-    name: 'Zeus',
-    gender: 'Male',
-    age: 3,
-    breed: 'Golden Retriever',
-    story: 'Owner Passed away'
+
+  render() {
+
+    return (
+      <div>
+        <Pet pet={this.props.cat} species="cat"/>
+        <Pet pet={this.props.dog} species="dog"/>
+      </div>
+    )
   }
-  return (
-    <div>
-    <Pet pet = {catToAdopt}/>
-    <Pet pet = {dogToAdopt}/>
-    </div>
-  )
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+  cat: state.cat,
+  dog: state.dog
+  }
+}
+
+export default connect(mapStateToProps)(DashBoard);
