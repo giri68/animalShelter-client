@@ -31,7 +31,7 @@ export const fetchCatError = () => ({
 
 export const fetchDog = () => dispatch => {
   dispatch(fetchDogRequest());
-  fetch(`http://localhost:8080/api/dog`)
+  fetch(`${API_BASE_URL}/api/dog`)
   .then(res => {
     if (!res.ok) {
       return Promise.reject(res.statusText)
@@ -60,7 +60,7 @@ export const fetchDogError = () => ({
 
 export const adoptPet = (species) => dispatch => {
   dispatch(adoptPetRequest());
-  fetch(`http://localhost:8080/api/${species}`, {
+  fetch(`${API_BASE_URL}/api/${species}`, {
     method: 'delete'
 })
   .then(res => {
